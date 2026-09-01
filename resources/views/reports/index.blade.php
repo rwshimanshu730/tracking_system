@@ -61,10 +61,12 @@
                             <th>Employee Code</th>
                             <th>First Login</th>
                             <th>Last Logout</th>
+                            <th>In-Out</th>
                             <th>Active</th>
                             <th>Idle</th>
                             <th>Manual</th>
                             <th>Total</th>
+                            <th>Work Time</th>
                             <th>Device</th>
                             <th>Action</th>
                         </tr>
@@ -76,6 +78,7 @@
                                 <td>{{ $session['employee_code'] }}</td>
                                 <td>{{ $session['login'] }}</td>
                                 <td>{{ $session['logout'] }}</td>
+                                <td>{{ $session['in_out'] }}</td>
                                 <td>{{ $session['active'] }}</td>
                                 <td>{{ $session['idle'] }}</td>
                                 <td>{{ $session['manual'] ?? '00:00:00' }}</td>
@@ -83,6 +86,7 @@
                                     {{ $session['total'] }}
                                    
                                 </td>
+                                <td>{{ $session['work_time'] }}</td>
                                 <td>{{ $session['devices'] }}</td>
                                 <td>
                                     @if ($session['employee_id'])
@@ -110,7 +114,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10">No employee sessions were recorded for {{ $selectedRangeLabel }}.</td>
+                                <td colspan="12">No employee sessions were recorded for {{ $selectedRangeLabel }}.</td>
                             </tr>
                         @endforelse
                     </tbody>

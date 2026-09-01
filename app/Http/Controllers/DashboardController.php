@@ -673,16 +673,24 @@ class DashboardController extends Controller
                     ->unique()
                     ->implode(', ');
 
+                $loginCarbon = $loginAt ? Carbon::parse((string) $loginAt) : null;
+                $logoutCarbon = (! $hasOpenSession && $logoutAt) ? Carbon::parse((string) $logoutAt) : null;
+                $inOutSeconds = ($loginCarbon && $logoutCarbon && $logoutCarbon->greaterThanOrEqualTo($loginCarbon))
+                    ? $logoutCarbon->diffInSeconds($loginCarbon)
+                    : 0;
+
                 return [
                     'employee_id' => $firstSession?->employee_id,
                     'employee' => $firstSession?->employee?->name ?? 'Unknown Employee',
                     'employee_code' => $firstSession?->employee?->employee_code ?? '-',
                     'login' => $this->formatDateTime($loginAt ? Carbon::parse((string) $loginAt) : null, $singleDay),
                     'logout' => $hasOpenSession ? 'Open' : $this->formatDateTime($logoutAt ? Carbon::parse((string) $logoutAt) : null, $singleDay),
+                    'in_out' => $inOutSeconds > 0 ? $this->formatDuration($inOutSeconds) : '-',
                     'active' => $this->formatDuration($activeSeconds),
                     'idle' => $this->formatDuration($idleSeconds),
                     'manual' => $this->formatDuration($manualSeconds),
                     'total' => $this->formatDuration($activeSeconds + $idleSeconds + $manualSeconds),
+                    'work_time' => $this->formatDuration($activeSeconds + $idleSeconds),
                     'devices' => $deviceNames !== '' ? $deviceNames : 'Unassigned',
                     'sessions' => $sortedSessions->count(),
                 ];
