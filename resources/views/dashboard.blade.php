@@ -65,7 +65,7 @@
         <section class="panel-card">
             <div class="panel-head">
                 <div>
-                    <p class="eyebrow">Website Mix</p>
+                    <p class="eyebrow">Website Mix Himanshu</p>
                     <h3>Top Domains Today</h3>
                 </div>
             </div>
